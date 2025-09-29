@@ -23,7 +23,7 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build -t $DOCKER_USERNAME/backend-blog-education:latest \
-          --build-arg MONGODB_URI ="${{ secrets.MONGODB_URI  }}" \
+          --build-arg MONGODB_URI="${{ secrets.MONGODB_URI }}" \
           --build-arg JWT_SECRET="${{ secrets.JWT_SECRET }}" .
 
       - name: Push Docker Image
