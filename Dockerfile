@@ -2,24 +2,15 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-COPY package.json ./
+COPY package*.json ./
 
 RUN npm install
 
 COPY . .
 
-ARG MONGO_URI
-ARG JWT_SECRET
+ENV MONGO_URI="sua_string_mongo_aqui"
+ENV JWT_SECRET="seu_secret_aqui"
 
-ENV MONGO_URI=$MONGO_URI
+EXPOSE 3000
 
-RUN echo "MONGO_URI=${MONGO_URI}" > .env
-RUN echo "JWT_SECRET=${JWT_SECRET}" > .env
-
-RUN npm i -g pnpm
-
-RUN pnpm build
-
-EXPOSE 3010
-
-CMD ["node", "dist/main"]
+CMD ["node", "src/server.js"]

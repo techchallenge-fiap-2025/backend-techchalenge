@@ -22,13 +22,13 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t $DOCKER_USERNAME/blog-education-backend:latest \
+          docker build -t $DOCKER_USERNAME/backend-blog-education:latest \
           --build-arg MONGO_URI="${{ secrets.MONGO_URI }}" \
           --build-arg JWT_SECRET="${{ secrets.JWT_SECRET }}" \
           .
 
       - name: Push Docker Image
-        run: docker push $DOCKER_USERNAME/blog-education-backend:latest
+        run: docker push $DOCKER_USERNAME/backend-blog-education:latest
 
       - name: Trigger Deploy on Render
         run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
