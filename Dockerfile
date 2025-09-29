@@ -8,8 +8,12 @@ RUN npm install
 
 COPY . .
 
-ENV MONGO_URI="sua_string_mongo_aqui"
-ENV JWT_SECRET="seu_secret_aqui"
+ARG MONGODB_URI
+ARG JWT_SECRET
+
+ENV MONGODB_URI=$MONGODB_URI
+ENV JWT_SECRET=$JWT_SECRET
+
 
 EXPOSE 3000
 
