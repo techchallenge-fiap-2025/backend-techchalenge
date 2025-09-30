@@ -24,7 +24,8 @@ app.use(helmet());
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
-  // "https://seu-front-em-producao.vercel.app", // coloque aqui o domínio real do front
+  "http://localhost:5574", // adiciona esta porta
+  process.env.FRONTEND_URL, // para produção
 ];
 
 app.use(
