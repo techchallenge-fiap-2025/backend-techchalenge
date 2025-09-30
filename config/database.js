@@ -11,7 +11,7 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     });
 
-    console.log("✅ MongoDB Atlas conectado com sucesso!");
+    console.log("✅ MongoDB Atlas conectado com sucesso! a");
     console.log(`📊 Database: ${mongoose.connection.name}`);
   } catch (error) {
     console.error("❌ Erro ao conectar com MongoDB Atlas:", error.message);
