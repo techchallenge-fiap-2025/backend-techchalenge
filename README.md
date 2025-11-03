@@ -166,14 +166,6 @@ Siga os passos abaixo para executar o projeto em seu ambiente local.
    [https://backend-blog-education.onrender.com/](https://backend-blog-education.onrender.com/)
 
 
-## Endpoints da API 
-
-Peço desculpas por isso! Às vezes a formatação pode se perder na exibição.
-
-Segue novamente todo o conteúdo da seção de Endpoints, agora dentro de um bloco de código para que você possa copiar e colar diretamente no seu README.md.
-
-Markdown
-
 ## 4. Endpoints da API 🌐
 
 A API está organizada em 4 grupos de rotas principais, todos prefixados com `/api`. Rotas que exigem autenticação devem receber o token JWT no cabeçalho `Authorization: Bearer <token>`.
