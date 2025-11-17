@@ -5,9 +5,10 @@ const morgan = require("morgan");
 require("dotenv").config();
 
 const connectDB = require("../config/database");
-const postRoutes = require("./routes/postRoutes");
+const postRoutes = require("../routes/postRoutes");
 const userRoutes = require("../routes/userRoutes");
 const commentRoutes = require("../routes/commentRoutes");
+const uploadRoutes = require("../routes/uploadRoutes");
 const errorHandler = require("../middleware/errorHandler");
 const path = require("path");
 
@@ -24,17 +25,30 @@ app.use(helmet());
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
-  "http://localhost:5574", // adiciona esta porta
+  "http://localhost:5574",
+  "http://127.0.0.1:5173",
+  "http://127.0.0.1:5174",
+  "http://127.0.0.1:5574",
   process.env.FRONTEND_URL, // para produção
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
+      // Permitir requisições sem origin (mobile apps, Postman, etc)
+      if (!origin) {
+        return callback(null, true);
+      }
+      
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        // Em desenvolvimento, permitir todas as origens
+        if (process.env.NODE_ENV !== "production") {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
+        }
       }
     },
     credentials: true,
@@ -65,6 +79,7 @@ app.get("/api/health", (req, res) => {
 app.use("/api/posts", postRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/comments", commentRoutes);
+app.use("/api/upload", uploadRoutes);
 
 // Rota para 404
 app.use("*", (req, res) => {

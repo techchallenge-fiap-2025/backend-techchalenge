@@ -3,18 +3,16 @@ const mongoose = require("mongoose");
 const connectDB = async () => {
   try {
     const mongoURI =
-      process.env.MONGODB_URI ||
-      "mongodb+srv://tcfiap:Fiap@2025@cluster0.6fy2vq7.mongodb.net/blog-edc?retryWrites=true&w=majority&appName=Cluster0";
+      process.env.MONGODB_URI || "mongodb://localhost:27017/blog-edc";
 
-    await mongoose.connect(mongoURI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(mongoURI);
 
-    console.log("✅ MongoDB Atlas conectado com sucesso! a");
+    const isAtlas = mongoURI.includes("mongodb+srv");
+    console.log(`✅ MongoDB ${isAtlas ? "Atlas" : "Local"} conectado com sucesso!`);
     console.log(`📊 Database: ${mongoose.connection.name}`);
+    console.log(`🔗 URI: ${mongoURI.replace(/\/\/.*@/, "//***:***@")}`); // Ocultar credenciais no log
   } catch (error) {
-    console.error("❌ Erro ao conectar com MongoDB Atlas:", error.message);
+    console.error("❌ Erro ao conectar com MongoDB:", error.message);
     process.exit(1);
   }
 };

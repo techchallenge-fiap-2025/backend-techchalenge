@@ -31,10 +31,17 @@ const authenticateToken = async (req, res, next) => {
 
     // Adicionar dados do usuário à requisição
     req.user = {
-      userId: user._id,
+      userId: user._id.toString(), // Garantir que seja string
       userType: user.userType,
       email: user.email,
     };
+
+    console.log("🔍 Auth middleware - Usuário autenticado:", {
+      userId: req.user.userId,
+      userType: req.user.userType,
+      email: req.user.email,
+      userIdType: typeof req.user.userId,
+    });
 
     next();
   } catch (error) {
@@ -82,6 +89,27 @@ const requireStudent = (req, res, next) => {
   next();
 };
 
+// Middleware para verificar se é admin
+const requireAdmin = (req, res, next) => {
+  console.log("🔍 requireAdmin - Verificando acesso:", {
+    userId: req.user?.userId,
+    userType: req.user?.userType,
+    email: req.user?.email,
+  });
+  
+  if (!req.user || req.user.userType !== "admin") {
+    console.log("❌ requireAdmin - Acesso negado. UserType:", req.user?.userType);
+    return res.status(403).json({
+      success: false,
+      message:
+        "Acesso negado. Apenas administradores podem realizar esta ação.",
+    });
+  }
+  
+  console.log("✅ requireAdmin - Acesso permitido");
+  next();
+};
+
 // Middleware opcional - não falha se não houver token
 const optionalAuth = async (req, res, next) => {
   try {
@@ -97,7 +125,7 @@ const optionalAuth = async (req, res, next) => {
 
       if (user && user.isActive) {
         req.user = {
-          userId: user._id,
+          userId: user._id.toString(), // Garantir que seja string
           userType: user.userType,
           email: user.email,
         };
@@ -115,5 +143,6 @@ module.exports = {
   authenticateToken,
   requireProfessor,
   requireStudent,
+  requireAdmin,
   optionalAuth,
 };
