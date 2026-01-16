@@ -20,6 +20,7 @@ const AulaSchema = new mongoose.Schema(
     },
     ordem: {
       type: Number,
+      required: true,
     },
   },
   { _id: false }
@@ -33,6 +34,7 @@ const CapituloSchema = new mongoose.Schema(
     },
     ordem: {
       type: Number,
+      required: true,
     },
     aulas: [AulaSchema],
   },
@@ -71,8 +73,9 @@ const CursoSchema = new mongoose.Schema(
       },
     ],
     capitulos: [CapituloSchema],
+
     status: {
-      type: Number,
+      type: String,
       enum: ["ativo", "inativo"],
       default: "ativo",
     },

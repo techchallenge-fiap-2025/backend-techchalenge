@@ -24,7 +24,6 @@ const AddressSchema = new mongoose.Schema({
   },
   pais: {
     type: String,
-    required: true,
   },
 });
 
